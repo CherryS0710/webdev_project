@@ -6,14 +6,13 @@ const authenticateToken = require('../middlewares/auth');
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
-
 // Protected Route
-
-
+router.get('/protected-route', authenticateToken, (req, res) => {
+    res.json({ message: 'Welcome to the protected route!', user: req.user });
+});
 // Sign-Up Route
 router.post('/signup', async (req, res) => {
     const { username, email, password } = req.body;
-
     try {
         // Check if the user already exists
         const existingUser = await User.findOne({ email });
