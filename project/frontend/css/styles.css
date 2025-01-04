@@ -1,0 +1,132 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #007BFF;
+    color: white;
+    padding: 10px;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.title {
+    flex: 1;
+    text-align: center;
+}
+
+.title h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.title h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    padding: 5px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+.search-bar button {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    background: white;
+    color: #007BFF;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background: #0056b3;
+    color: white;
+}
+/* Authentication Page */
+.auth-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-container label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.auth-container button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #007BFF;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.auth-container button:hover {
+    background: #0056b3;
+}
+
+.auth-container p {
+    text-align: center;
+}
+
+.auth-container a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.auth-container a:hover {
+    text-decoration: underline;
+}
+
+/* Logout Button */
+.logout-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background: white;
+    color: #007BFF;
+    text-decoration: none;
+    border: 1px solid #007BFF;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background: #007BFF;
+    color: white;
+}
