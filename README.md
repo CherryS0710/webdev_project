@@ -21,11 +21,11 @@ The application features a responsive table with pagination and a modal popup fo
 - JWT_SECRET=your_secure_secret_key
 - BASE_URL=http://localhost:5001
 
-2.Install dependencies:
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-3.Set up the MongoDB database:
+3. Set up the MongoDB database:
 - Ensure MongoDB is installed and running.
 - Create a new MongoDB database for the project.
