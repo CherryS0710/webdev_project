@@ -24,6 +24,7 @@ The application features a responsive table with pagination and a modal popup fo
 2. Install dependencies:
 ```bash
 npm install
+npm start
 ```
 
 3. Set up the MongoDB database:
