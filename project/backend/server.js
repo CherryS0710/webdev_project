@@ -20,6 +20,7 @@ const PORT = 5001;
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.json());
 
 // Serve static files
 app.use('/static', express.static(path.join(__dirname, 'static')));
