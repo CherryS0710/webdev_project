@@ -21,6 +21,19 @@ const PORT = 5001;
 app.use(bodyParser.json());
 app.use(cors());
 
+// Serve static files
+app.use('/static', express.static(path.join(__dirname, 'static')));
+
+// API routes
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Hello from API!' });
+});
+
+// Catch-all route for SPA
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 console.log('MongoDB URI:', process.env.MONGO_URI);
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB"))
