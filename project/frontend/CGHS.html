@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGHS Bulletin Board</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Set the background color for the entire page */
+        body {
+            background-color: rgb(222, 247, 255);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <!-- Logo for the bulletin board -->
+            <img src="logo/img.png" alt="Logo">
+        </div>
+        <div class="title">
+            <!-- Main title of the bulletin board -->
+            <h1>CGHS Bulletin Board</h1>
+        </div>
+        <div class="search-bar">
+            <!-- Search bar for finding posts -->
+            <input type="text" id="search" placeholder="Search...">
+            <button onclick="searchPosts()">🔍</button>
+            <!-- Logout button for user session -->
+            <a href="index.html" class="logout-btn" id="logoutButton">Logout</a>
+        </div>
+    </header>
+
+    <nav class="breadcrumbs">
+        <ul>
+            <li class="home">
+                <!-- Breadcrumb navigation home link -->
+                <a href="home.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                        <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+                        <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li class="arrow">
+                <!-- Arrow icon for breadcrumb navigation -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path fill-rule="evenodd" d="M16.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clip-rule="evenodd" />
+                </svg>
+            </li>
+            <li>
+                <!-- Link to the CGHS page -->
+                <a href="CGHS.html">CGHS</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="bulletin-table">
+            <h2>CGHS Updates</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <!-- Table headers for bulletin information -->
+                        <th>#</th>
+                        <th>Topic</th>
+                        <th>Details</th>
+                        <th>Posted By</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="cghs-table-content">
+                    <!-- JavaScript will dynamically populate this section -->
+                </tbody>
+            </table>
+            <div id="cghs-pagination-controls"></div>
+        </section>
+
+        <section class="form-container">
+            <h2>Update CGHS</h2>
+            <form id="bulletinForm">
+                <!-- Input fields for creating a new bulletin update -->
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter Username" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter Email" required>
+
+                <label for="topic">Topic</label>
+                <input type="text" id="topic" placeholder="Enter Topic" required>
+
+                <label for="details">Details</label>
+                <textarea id="details" placeholder="Enter Details" required></textarea>
+
+                <button type="submit">Add Update</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // API endpoints configuration
+        const API_URLS = {
+            CGHS: "http://localhost:5001/cghs"
+        };
+
+        // Handles form submission to add a new bulletin update
+        async function handleBulletinSubmit(event) {
+            event.preventDefault(); // Prevent form from refreshing the page
+
+            // Collect and trim user inputs
+            const username = document.getElementById("username").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const topic = document.getElementById("topic").value.trim();
+            const details = document.getElementById("details").value.trim();
+
+            try {
+                // Send a POST request to add a new bulletin update
+                await apiFetch(API_URLS.CGHS, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, email, topic, details })
+                });
+
+                alert("CGHS update added successfully!");
+                fetchCGHSBulletins(); // Refresh the bulletin list
+                document.getElementById("bulletinForm").reset(); // Clear the form inputs
+            } catch (error) {
+                alert(error.message); // Display error message
+            }
+        }
+
+        // Fetches and displays bulletin updates with pagination
+        async function fetchCGHSBulletins(page = 1, pageSize = 7) {
+            try {
+                // Fetch data from the API
+                const bulletins = await apiFetch(API_URLS.CGHS);
+                const tableBody = document.getElementById("cghs-table-content");
+
+                if (!tableBody) return;
+
+                tableBody.innerHTML = ""; // Clear existing table content
+
+                // Calculate pagination slice
+                const start = (page - 1) * pageSize;
+                const end = start + pageSize;
+                const paginatedBulletins = bulletins.slice().reverse().slice(start, end);
+
+                // Populate table rows with bulletin data
+                paginatedBulletins.forEach((bulletin, index) => {
+                    const row = document.createElement("tr");
+                    const date = new Date(bulletin.date);
+                    // Format the date and time
+                    const formattedDate = `${date.toLocaleDateString()}<br>${date.toLocaleTimeString()}`;
+                    row.innerHTML = `
+                    <td>${start + index + 1}</td>
+                    <td>${bulletin.topic}</td>
+                    <td>${bulletin.details}</td>
+                    <td>
+                        ${bulletin.username}<br>
+                        ${bulletin.email ? `<small>${bulletin.email}</small>` : ""}
+                    </td>
+                    <td>${formattedDate}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+
+
+                updateCGHSPaginationControls(page, Math.ceil(bulletins.length / pageSize));
+            } catch (error) {
+                console.error("Error fetching CGHS bulletins:", error);
+            }
+        }
+
+        // Updates pagination buttons dynamically
+        function updateCGHSPaginationControls(currentPage, totalPages) {
+            const paginationControls = document.getElementById("cghs-pagination-controls");
+
+            if (!paginationControls) {
+                console.error("Pagination controls element not found");
+                return;
+            }
+
+            paginationControls.innerHTML = ""; // Clear existing pagination controls
+
+            // Create buttons for each page
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement("button");
+                button.innerText = i;
+                button.disabled = i === currentPage; // Disable button for the current page
+                button.addEventListener("click", () => fetchCGHSBulletins(i));
+                paginationControls.appendChild(button);
+            }
+        }
+
+        // Utility function to perform API requests
+        async function apiFetch(url, options) {
+            const response = await fetch(url, options);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        }
+
+        // Initialize the page with event listeners and initial data fetch
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchCGHSBulletins(1); // Fetch the first page of bulletins
+            document.getElementById("bulletinForm")?.addEventListener("submit", handleBulletinSubmit);
+        });
+    </script>
+</body>
+</html>

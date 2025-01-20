@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulletin Board</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body{
+    background-color:rgb(222, 247, 255);
+    }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="logo/img.png" alt="Logo" />
+        </div>
+        <div class="title">
+            <h1>Solid State Physics Laboratory Bulletin Board</h1>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search..." />
+            <button onclick="searchPosts()">&#128269;</button>
+            <a href="index.html" class="logout-btn" id="logoutButton">Logout</a>
+        </div>
+    </div>
+    <div class="breadcrumbs">
+        <ul>
+            <li class="home">
+                <a href="home.html" title="Go to Home Page">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z" />
+                    <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
+                </svg>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="table-container">
+        <div>
+            <a href="pass.html"><button id="Admin"><div class="box">Admin</div></button></a>
+            <a href="pass.html"><button id="CGHS"><div class="box">CGHS</div></button></a>
+            <a href="pass.html"><button id="CSD Canteen"><div class="box">CSD Canteen</div></button></a>
+            <a href="pass.html"><button id="Finance"><div class="box">Finance</div></button></a>
+            <a href="pass.html"><button id="HRD"><div class="box">HRD</div></button></a>
+            <a href="pass.html"><button id="Information Technology Group"><div class="box">Information Technology Group</div></button></a>
+            <a href="pass.html"><button id="Instrumentation"><div class="box">Instrumentation</div></button></a>
+            <a href="pass.html"><button id="Library"><div class="box">Library</div></button></a>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
